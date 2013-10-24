@@ -80,3 +80,95 @@ BUGS, SUPPORT AND CONTRIBUTIONS
 - Email me at yang@yangman.ca, with "[poit]" in the subject line
 - Ping me on identi.ca (@yangman) or Twitter (@yangaroo)
 - Find me on IRC (nickname 'yangman') in #openid on irc.freenode.net
+
+###append
+
+poit
+
+Simple, personal OpenID
+What is poit?
+
+poit is a simple, single-user OpenID authentication server implementation with the following goals:
+
+    Be self-contained
+    Be easy to secure
+    Be as simple to use as possible
+
+It is specifically geared towards people that demand total control of their OpenID identity without depending on another web application framework.
+
+Installation and Configuration
+
+poit is distributed as a single CGI script written in Python.
+Requirements
+
+    python-2.6.x
+    python-openid-2.x.x
+    HTTP server with CGI support
+
+suEXEC and SSL support are preferred, but not required. However, running poit under suEXEC is strongly recommended for security reasons.
+Setup
+
+Simply copy poit.py into a location where .py files are executed as CGI scripts, and use its location as an OpenID 2.0 endpoint URL.
+
+To create an initial configuration, execute poit.py from the command line and specify a new identity and passphrase. For example, to use http://mydomain.tld/ as your identity, run:
+
+./poit.py --add-identity=http://mydomain.tld/ --passphrase
+
+Optionally install the included poit.css stylesheet, or use one of the released versions hosted on this site. See below on configuring the stylesheet location.
+Configuration
+
+By default, poit requires a configuration file located at ~/.config/poit.conf. If it is not found there, ~/.poit.conf and ./poit.conf are then chcked, in that order.
+
+You can edit the configuration file manually in a text editor, or use the poit.py script itself to configure it. To use the script as a configuration tool, simply run it from the command line.
+
+See
+
+./poit.py --help
+
+for supported options.
+
+Not all supported options can be configured from the command line, and some options must be modified using an editor. Refer to the example configuration file below:
+
+## Example poit.conf file
+##
+## Use this as a reference to modify your poit configuration after creating
+## a default one using poit in command line mode.
+##
+## NOTE: Before version 1.0, groups and keys may change names or be removed
+## without notice. Backwards compatibility will NOT be guaranteed.
+## CHECK THIS FILE AGAINST YOUR EXISTING CONFIGURATION WHEN UPGRADING.
+
+[security]
+# Duration of authenticated session in seconds; defaults to 21600
+#session_time = 21600
+
+# Special security handling. Set to 'none' or 'https'; defaults to 'none'
+#
+# https
+#   Use this mode if you want to use SSL with a self-signed certificate.
+#   Ensure your configured endpoint URL uses 'http://..' and not 'https://...'.
+#policy = none
+
+[server]
+# Set this if exposing the server at a URL different from the script itself
+#endpoint = http://domain.tld/openid
+
+# Location to store session information; defaults to '~/.cache/poit'
+#session_dir = ~/.cache/poit
+
+[ui]
+# URL of stylesheet to use; defaults to './poit.css'
+#stylesheet = ./poit.css
+
+# Enable debugging output; cookie write does not work in this mode
+#debug = False
+
+# These two groups should not be modified manually. Use the command line tool.
+[ids]
+[passphrase]
+
+Bugs and Patches
+
+For support, bug reporting and contributing patches, please email me at yang@yangman.ca with "[poit]" in the subject line.
+
+Alternatively, ping me on identi.ca(@yangman) or Twitter(@yangaroo).
